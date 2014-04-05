@@ -215,12 +215,11 @@ BugAnno.instance = null;
 
 
 //-------------------------------------------------------------------------------
-// Private Static Methods
+// Static Methods
 //-------------------------------------------------------------------------------
 
 /**
  * @static
- * @private
  * @return {BugAnno}
  */
 BugAnno.getInstance = function() {
