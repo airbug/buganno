@@ -88,7 +88,46 @@ var BugAnno = Class.extend(Obj, {
     //-------------------------------------------------------------------------------
 
     /**
-     * @param {Array.<(string | Path)> | ICollection.<(string | Path)>} filePaths
+     * @param {function(Throwable=)} callback
+     */
+    deinitialize: function(callback) {
+        this.ensureBuilderDeinitialized(callback);
+    },
+
+    /**
+     * @param {function(Throwable=)} callback
+     */
+    initialize: function(callback) {
+        this.ensureBuilderInitialized(callback);
+    },
+
+    /**
+     * @param {(Array.<(string | Path)> | ICollection.<(string | Path)>)} filePaths
+     * @param {function(Error, AnnotationRegistryLibrary=)} callback
+     */
+    parse: function(filePaths, callback) {
+        var _this                       = this;
+        var annotationRegistryLibrary   = null;
+        $series([
+            $task(function(flow) {
+                _this.annotationRegistryLibraryBuilder.build(filePaths, function(throwable, returnedAnnotationRegistryLibrary) {
+                    if (!throwable) {
+                        annotationRegistryLibrary = returnedAnnotationRegistryLibrary;
+                    }
+                    flow.complete(throwable);
+                });
+            })
+        ]).execute(function(throwable) {
+            if (!throwable) {
+                callback(null, annotationRegistryLibrary);
+            } else {
+                callback(throwable);
+            }
+        });
+    },
+
+    /**
+     * @param {(Array.<(string | Path)> | ICollection.<(string | Path)>)} filePaths
      * @param {function(Error, AnnotationRegistryLibrary=)} callback
      */
     parseOnce: function(filePaths, callback) {
@@ -197,6 +236,9 @@ BugAnno.getInstance = function() {
 //-------------------------------------------------------------------------------
 
 Proxy.proxy(BugAnno, Proxy.method(BugAnno.getInstance), [
+    "deinitialize",
+    "initialize",
+    "parse",
     "parseOnce"
 ]);
 
