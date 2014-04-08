@@ -75,9 +75,6 @@ var AnnotationParserProcess = Class.extend(Obj, {
      *
      */
     start: function() {
-        //TEST
-        console.log("Starting AnnotationParserProcess");
-
         var _this = this;
         this.process.on('message', function(message) {
             _this.handleMessage(message);
@@ -161,9 +158,6 @@ var AnnotationParserProcess = Class.extend(Obj, {
      * @param {*} message
      */
     handleMessage: function(message) {
-        //TEST
-        console.log("AnnotationParserProcess received message:", message);
-
         switch (message.messageType) {
             case "ParseTask":
                 this.processParseTask(message.parseTask);

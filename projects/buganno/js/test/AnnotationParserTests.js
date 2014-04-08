@@ -7,14 +7,14 @@
 //@Require('Class')
 //@Require('buganno.AnnotationParser')
 //@Require('bugmeta.BugMeta')
-//@Require('bugunit-annotate.TestAnnotation')
+//@Require('bugunit.TestAnnotation')
 
 
 //-------------------------------------------------------------------------------
 // Common Modules
 //-------------------------------------------------------------------------------
 
-var bugpack = require('bugpack').context();
+var bugpack             = require('bugpack').context();
 
 
 //-------------------------------------------------------------------------------
@@ -24,15 +24,15 @@ var bugpack = require('bugpack').context();
 var Class               = bugpack.require('Class');
 var AnnotationParser    = bugpack.require('buganno.AnnotationParser');
 var BugMeta             = bugpack.require('bugmeta.BugMeta');
-var TestAnnotation      = bugpack.require('bugunit-annotate.TestAnnotation');
+var TestAnnotation      = bugpack.require('bugunit.TestAnnotation');
 
 
 //-------------------------------------------------------------------------------
 // Simplify References
 //-------------------------------------------------------------------------------
 
-var bugmeta = BugMeta.context();
-var test = TestAnnotation.test;
+var bugmeta             = BugMeta.context();
+var test                = TestAnnotation.test;
 
 
 //-------------------------------------------------------------------------------
@@ -81,6 +81,12 @@ var annotationParserParseTest = {
         });
     }
 };
+
+
+//-------------------------------------------------------------------------------
+// BugMeta
+//-------------------------------------------------------------------------------
+
 bugmeta.annotate(annotationParserParseTest).with(
     test().name("AnnotationParser parse test")
 );

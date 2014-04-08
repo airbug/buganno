@@ -33,9 +33,9 @@ var nodejs              = enableModule('nodejs');
 // Values
 //-------------------------------------------------------------------------------
 
-var version             = "0.1.1";
+var version             = "0.1.2";
 var dependencies        = {
-    bugpack: "0.1.1"
+    bugpack: "0.1.5"
 };
 
 
@@ -89,12 +89,21 @@ buildProperties({
                 }
             },
             sourcePaths: [
+                "../buganno/projects/buganno/js/src",
+                "../bugjs/projects/bugyarn/js/src",
+                "../bugmeta/projects/bugmeta/js/src",
+                "../bugunit/projects/bugdouble/js/src",
                 "../bugunit/projects/bugunit/js/src"
             ],
             scriptPaths: [
+                "../buganno/projects/buganno/js/scripts",
                 "../bugunit/projects/bugunit/js/scripts"
             ],
             testPaths: [
+                "../bugcore/projects/bugcore/js/test",
+                "../bugflow/projects/bugflow/js/test",
+                "../bugfs/projects/bugfs/js/test",
+                "../bugtrace/projects/bugtrace/js/test",
                 "./projects/buganno/js/test"
             ]
         }
@@ -151,18 +160,18 @@ buildTarget('local').buildFlow(
                     packageVersion: "{{node.packageJson.version}}"
                 }
             }),
-            /*targetTask('startNodeModuleTests', {
-             init: function(task, buildProject, properties) {
-             var packedNodePackage = nodejs.findPackedNodePackage(
-             buildProject.getProperty("node.packageJson.name"),
-             buildProject.getProperty("node.packageJson.version")
-             );
-             task.updateProperties({
-             modulePath: packedNodePackage.getFilePath()
-             //checkCoverage: true
-             });
-             }
-             }),*/
+            targetTask('startNodeModuleTests', {
+                init: function(task, buildProject, properties) {
+                    var packedNodePackage = nodejs.findPackedNodePackage(
+                        buildProject.getProperty("node.packageJson.name"),
+                        buildProject.getProperty("node.packageJson.version")
+                    );
+                    task.updateProperties({
+                        modulePath: packedNodePackage.getFilePath()
+                        //checkCoverage: true
+                    });
+                }
+            }),
             targetTask("s3PutFile", {
                 init: function(task, buildProject, properties) {
                     var packedNodePackage = nodejs.findPackedNodePackage(buildProject.getProperty("node.packageJson.name"),
@@ -223,19 +232,19 @@ buildTarget('prod').buildFlow(
                         packageName: "{{node.unitTest.packageJson.name}}",
                         packageVersion: "{{node.unitTest.packageJson.version}}"
                     }
-                })/*,
-                 targetTask('startNodeModuleTests', {
-                 init: function(task, buildProject, properties) {
-                 var packedNodePackage = nodejs.findPackedNodePackage(
-                 buildProject.getProperty("node.unitTest.packageJson.name"),
-                 buildProject.getProperty("node.unitTest.packageJson.version")
-                 );
-                 task.updateProperties({
-                 modulePath: packedNodePackage.getFilePath(),
-                 checkCoverage: true
-                 });
-                 }
-                 })*/
+                }),
+                targetTask('startNodeModuleTests', {
+                    init: function(task, buildProject, properties) {
+                        var packedNodePackage = nodejs.findPackedNodePackage(
+                            buildProject.getProperty("node.unitTest.packageJson.name"),
+                            buildProject.getProperty("node.unitTest.packageJson.version")
+                        );
+                        task.updateProperties({
+                            modulePath: packedNodePackage.getFilePath(),
+                            checkCoverage: true
+                        });
+                    }
+                })
             ]),
 
             // Create production node buganno package

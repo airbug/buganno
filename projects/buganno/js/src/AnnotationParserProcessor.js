@@ -148,9 +148,6 @@ var AnnotationParserProcessor = Class.extend(Obj, {
 
         //TODO BRN: Update this system to use the more robust functionality from bugwork
 
-        //TEST
-        console.log("Starting processes");
-
         if (!this.started) {
             this.started    = true;
             var numCPUs     = os.cpus().length;
@@ -204,8 +201,6 @@ var AnnotationParserProcessor = Class.extend(Obj, {
         var processReadyListener = function(message) {
             switch (message.messageType) {
                 case "ProcessReady":
-                    //TEST
-                    console.log("AnnotationParserProcessor Received 'ProcessReady' message");
                     _this.annotationParserProcesses.add(childProcess);
                     childProcess.removeListener('message', processReadyListener);
                     childProcess.on('message', _this.hearChildProcessMessage);
@@ -253,10 +248,6 @@ var AnnotationParserProcessor = Class.extend(Obj, {
     sendParseTaskAndWaitForResponse: function(parseTask, callback) {
         this.taskUuidCallbackMap.put(parseTask.taskUuid, callback);
         var annotationParserProcess = this.roundRobinNextProcess();
-
-        //TEST
-        console.log("Sending parseTask:", parseTask);
-
         annotationParserProcess.send({
             messageType: "ParseTask",
             parseTask: parseTask

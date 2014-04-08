@@ -8,7 +8,7 @@
 //@Require('List')
 //@Require('buganno.BugAnnotation')
 //@Require('bugmeta.BugMeta')
-//@Require('bugunit-annotate.TestAnnotation')
+//@Require('bugunit.TestAnnotation')
 //@Require('bugyarn.BugYarn')
 
 
@@ -27,7 +27,7 @@ var Class                   = bugpack.require('Class');
 var List                    = bugpack.require('List');
 var BugAnnotation           = bugpack.require('buganno.BugAnnotation');
 var BugMeta                 = bugpack.require('bugmeta.BugMeta');
-var TestAnnotation          = bugpack.require('bugunit-annotate.TestAnnotation');
+var TestAnnotation          = bugpack.require('bugunit.TestAnnotation');
 var BugYarn                 = bugpack.require('bugyarn.BugYarn');
 
 
