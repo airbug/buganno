@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2014 airbug inc. http://airbug.com
+ *
+ * buganno may be freely distributed under the MIT license.
+ */
+
+
 //-------------------------------------------------------------------------------
 // Annotations
 //-------------------------------------------------------------------------------
@@ -12,82 +19,82 @@
 
 
 //-------------------------------------------------------------------------------
-// Common Modules
+// Context
 //-------------------------------------------------------------------------------
 
-var bugpack                 = require('bugpack').context();
+require('bugpack').context("*", function(bugpack) {
+
+    //-------------------------------------------------------------------------------
+    // BugPack
+    //-------------------------------------------------------------------------------
+
+    var Class                   = bugpack.require('Class');
+    var AnnotationRegistry      = bugpack.require('buganno.AnnotationRegistry');
+    var BugMeta                 = bugpack.require('bugmeta.BugMeta');
+    var TestAnnotation          = bugpack.require('bugunit.TestAnnotation');
+    var BugYarn                 = bugpack.require('bugyarn.BugYarn');
 
 
-//-------------------------------------------------------------------------------
-// BugPack
-//-------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------
+    // Simplify References
+    //-------------------------------------------------------------------------------
 
-var Class                   = bugpack.require('Class');
-var AnnotationRegistry      = bugpack.require('buganno.AnnotationRegistry');
-var BugMeta                 = bugpack.require('bugmeta.BugMeta');
-var TestAnnotation          = bugpack.require('bugunit.TestAnnotation');
-var BugYarn                 = bugpack.require('bugyarn.BugYarn');
+    var bugmeta                 = BugMeta.context();
+    var bugyarn                 = BugYarn.context();
+    var test                    = TestAnnotation.test;
 
 
-//-------------------------------------------------------------------------------
-// Simplify References
-//-------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------
+    // BugYarn
+    //-------------------------------------------------------------------------------
 
-var bugmeta                 = BugMeta.context();
-var bugyarn                 = BugYarn.context();
-var test                    = TestAnnotation.test;
-
-
-//-------------------------------------------------------------------------------
-// BugYarn
-//-------------------------------------------------------------------------------
-
-bugyarn.registerWeaver("testAnnotationRegistry", function(yarn, args) {
-    return new AnnotationRegistry(args[0]);
-});
-
-bugyarn.registerWinder("setupTestAnnotationRegistry", function(yarn) {
-    yarn.wind({
-        annotationRegistry: new AnnotationRegistry("testFilePath")
+    bugyarn.registerWeaver("testAnnotationRegistry", function(yarn, args) {
+        return new AnnotationRegistry(args[0]);
     });
+
+    bugyarn.registerWinder("setupTestAnnotationRegistry", function(yarn) {
+        yarn.wind({
+            annotationRegistry: new AnnotationRegistry("testFilePath")
+        });
+    });
+
+
+    //-------------------------------------------------------------------------------
+    // Declare Tests
+    //-------------------------------------------------------------------------------
+
+    /**
+     * This tests...
+     * 1) Instantiating a AnnotationRegistry class
+     */
+    var annotationRegistryInstantiationTest = {
+
+        // Setup Test
+        //-------------------------------------------------------------------------------
+
+        setup: function() {
+            this.testFilePath           = "testFilePath";
+            this.testAnnotationRegistry =   new AnnotationRegistry(this.testFilePath);
+        },
+
+
+        // Run Test
+        //-------------------------------------------------------------------------------
+
+        test: function(test) {
+            test.assertTrue(Class.doesExtend(this.testAnnotationRegistry, AnnotationRegistry),
+                "Assert instance of AnnotationRegistry");
+            test.assertEqual(this.testAnnotationRegistry.getFilePath(), this.testFilePath,
+                "Assert AnnotationRegistry.filePath was set correctly");
+        }
+    };
+
+
+    //-------------------------------------------------------------------------------
+    // BugMeta
+    //-------------------------------------------------------------------------------
+
+    bugmeta.annotate(annotationRegistryInstantiationTest).with(
+        test().name("AnnotationRegistry - instantiation test")
+    );
 });
-
-
-//-------------------------------------------------------------------------------
-// Declare Tests
-//-------------------------------------------------------------------------------
-
-/**
- * This tests...
- * 1) Instantiating a AnnotationRegistry class
- */
-var annotationRegistryInstantiationTest = {
-
-    // Setup Test
-    //-------------------------------------------------------------------------------
-
-    setup: function() {
-        this.testFilePath           = "testFilePath";
-        this.testAnnotationRegistry =   new AnnotationRegistry(this.testFilePath);
-    },
-
-
-    // Run Test
-    //-------------------------------------------------------------------------------
-
-    test: function(test) {
-        test.assertTrue(Class.doesExtend(this.testAnnotationRegistry, AnnotationRegistry),
-            "Assert instance of AnnotationRegistry");
-        test.assertEqual(this.testAnnotationRegistry.getFilePath(), this.testFilePath,
-            "Assert AnnotationRegistry.filePath was set correctly");
-    }
-};
-
-
-//-------------------------------------------------------------------------------
-// BugMeta
-//-------------------------------------------------------------------------------
-
-bugmeta.annotate(annotationRegistryInstantiationTest).with(
-    test().name("AnnotationRegistry - instantiation test")
-);

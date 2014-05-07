@@ -1,9 +1,15 @@
+/*
+ * Copyright (c) 2014 airbug inc. http://airbug.com
+ *
+ * buganno may be freely distributed under the MIT license.
+ */
+
+
 //-------------------------------------------------------------------------------
 // Script
 //-------------------------------------------------------------------------------
 
-var bugpackApi  = require("bugpack");
-bugpackApi.loadContext(module, function(error, bugpack) {
+require("bugpack").loadContext(module, function(error, bugpack) {
     if (!error) {
         bugpack.loadExport("buganno.AnnotationParserProcess", function(error) {
             if (!error) {

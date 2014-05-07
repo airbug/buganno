@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2014 airbug inc. http://airbug.com
+ *
+ * buganno may be freely distributed under the MIT license.
+ */
+
+
 //-------------------------------------------------------------------------------
 // Annotations
 //-------------------------------------------------------------------------------
@@ -12,108 +19,111 @@
 
 
 //-------------------------------------------------------------------------------
-// Common Modules
+// Context
 //-------------------------------------------------------------------------------
 
-var bugpack     = require('bugpack').context();
-
-
-//-------------------------------------------------------------------------------
-// BugPack
-//-------------------------------------------------------------------------------
-
-var Class       = bugpack.require('Class');
-var List        = bugpack.require('List');
-var Map         = bugpack.require('Map');
-var Obj         = bugpack.require('Obj');
-var Path        = bugpack.require('bugfs.Path');
-
-
-//-------------------------------------------------------------------------------
-// Declare Class
-//-------------------------------------------------------------------------------
-
-/**
- * @class
- * @extends {Obj}
- */
-var AnnotationRegistryLibrary = Class.extend(Obj, {
+require('bugpack').context("*", function(bugpack) {
 
     //-------------------------------------------------------------------------------
-    // Constructor
+    // BugPack
+    //-------------------------------------------------------------------------------
+
+    var Class       = bugpack.require('Class');
+    var List        = bugpack.require('List');
+    var Map         = bugpack.require('Map');
+    var Obj         = bugpack.require('Obj');
+    var Path        = bugpack.require('bugfs.Path');
+
+
+    //-------------------------------------------------------------------------------
+    // Declare Class
     //-------------------------------------------------------------------------------
 
     /**
-     * @constructs
+     * @class
+     * @extends {Obj}
      */
-    _constructor: function() {
+    var AnnotationRegistryLibrary = Class.extend(Obj, {
 
-        this._super();
+        _name: "buganno.AnnotationRegistryLibrary",
 
 
         //-------------------------------------------------------------------------------
-        // Private Properties
+        // Constructor
         //-------------------------------------------------------------------------------
 
         /**
-         * @private
-         * @type {List.<AnnotationRegistry>}
+         * @constructs
          */
-        this.annotationRegistryList             = new List();
+        _constructor: function() {
+
+            this._super();
+
+
+            //-------------------------------------------------------------------------------
+            // Private Properties
+            //-------------------------------------------------------------------------------
+
+            /**
+             * @private
+             * @type {List.<AnnotationRegistry>}
+             */
+            this.annotationRegistryList             = new List();
+
+            /**
+             * @private
+             * @type {Map.<string, AnnotationRegistry>}
+             */
+            this.filePathToAnnotationRegistryMap    = new Map();
+        },
+
+
+        //-------------------------------------------------------------------------------
+        // Getters and Setters
+        //-------------------------------------------------------------------------------
 
         /**
-         * @private
-         * @type {Map.<string, AnnotationRegistry>}
+         * @return {List.<AnnotationRegistry>}
          */
-        this.filePathToAnnotationRegistryMap    = new Map();
-    },
+        getAnnotationRegistryList: function() {
+            return this.annotationRegistryList;
+        },
 
 
-    //-------------------------------------------------------------------------------
-    // Getters and Setters
-    //-------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------
+        // Convenience Methods
+        //-------------------------------------------------------------------------------
 
-    /**
-     * @return {List.<AnnotationRegistry>}
-     */
-    getAnnotationRegistryList: function() {
-        return this.annotationRegistryList;
-    },
+        /**
+         * @param {(Path | string)} filePath
+         * @return {AnnotationRegistry}
+         */
+        getAnnotationRegistryByFilePath: function(filePath) {
+            var pathString = filePath;
+            if (Class.doesExtend(pathString, Path)) {
+                pathString = filePath.getAbsolutePath();
+            }
+            return this.filePathToAnnotationRegistryMap.get(pathString);
+        },
 
 
-    //-------------------------------------------------------------------------------
-    // Convenience Methods
-    //-------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------
+        // Public Methods
+        //-------------------------------------------------------------------------------
 
-    /**
-     * @param {(Path | string)} filePath
-     * @return {AnnotationRegistry}
-     */
-    getAnnotationRegistryByFilePath: function(filePath) {
-        var pathString = filePath;
-        if (Class.doesExtend(pathString, Path)) {
-            pathString = filePath.getAbsolutePath();
+        /**
+         * @param {AnnotationRegistry} annotationRegistry
+         */
+        addAnnotationRegistry: function(annotationRegistry) {
+            this.annotationRegistryList.add(annotationRegistry);
+            this.filePathToAnnotationRegistryMap.put(annotationRegistry.getFilePath().getAbsolutePath(), annotationRegistry);
         }
-        return this.filePathToAnnotationRegistryMap.get(pathString);
-    },
+    });
 
 
     //-------------------------------------------------------------------------------
-    // Public Methods
+    // Exports
     //-------------------------------------------------------------------------------
 
-    /**
-     * @param {AnnotationRegistry} annotationRegistry
-     */
-    addAnnotationRegistry: function(annotationRegistry) {
-        this.annotationRegistryList.add(annotationRegistry);
-        this.filePathToAnnotationRegistryMap.put(annotationRegistry.getFilePath().getAbsolutePath(), annotationRegistry);
-    }
+    bugpack.export('buganno.AnnotationRegistryLibrary', AnnotationRegistryLibrary);
 });
-
-
-//-------------------------------------------------------------------------------
-// Exports
-//-------------------------------------------------------------------------------
-
-bugpack.export('buganno.AnnotationRegistryLibrary', AnnotationRegistryLibrary);

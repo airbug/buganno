@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2014 airbug inc. http://airbug.com
+ *
+ * buganno may be freely distributed under the MIT license.
+ */
+
+
 //-------------------------------------------------------------------------------
 // Annotations
 //-------------------------------------------------------------------------------
@@ -11,108 +18,111 @@
 
 
 //-------------------------------------------------------------------------------
-// Common Modules
+// Context
 //-------------------------------------------------------------------------------
 
-var bugpack         = require('bugpack').context();
-
-
-//-------------------------------------------------------------------------------
-// BugPack
-//-------------------------------------------------------------------------------
-
-var Class           = bugpack.require('Class');
-var IObjectable     = bugpack.require('IObjectable');
-var List            = bugpack.require('List');
-var Obj             = bugpack.require('Obj');
-
-
-//-------------------------------------------------------------------------------
-// Declare Class
-//-------------------------------------------------------------------------------
-
-/**
- * @class
- * @extends {Obj}
- */
-var BugAnnotation = Class.extend(Obj, {
+require('bugpack').context("*", function(bugpack) {
 
     //-------------------------------------------------------------------------------
-    // Constructor
+    // BugPack
+    //-------------------------------------------------------------------------------
+
+    var Class           = bugpack.require('Class');
+    var IObjectable     = bugpack.require('IObjectable');
+    var List            = bugpack.require('List');
+    var Obj             = bugpack.require('Obj');
+
+
+    //-------------------------------------------------------------------------------
+    // Declare Class
     //-------------------------------------------------------------------------------
 
     /**
-     * @constructs
-     * @param {string} annotationType
-     * @param {Array.<(string | number)>} arguments
+     * @class
+     * @extends {Obj}
      */
-    _constructor: function(annotationType, arguments) {
+    var BugAnnotation = Class.extend(Obj, {
 
-        this._super();
+        _name: "buganno.BugAnnotation",
 
 
         //-------------------------------------------------------------------------------
-        // Private Properties
+        // Constructor
         //-------------------------------------------------------------------------------
 
         /**
-         * @private
-         * @type {List.<(string | number)>}
+         * @constructs
+         * @param {string} annotationType
+         * @param {Array.<(string | number)>} arguments
          */
-        this.argumentList       = new List(arguments);
+        _constructor: function(annotationType, arguments) {
+
+            this._super();
+
+
+            //-------------------------------------------------------------------------------
+            // Private Properties
+            //-------------------------------------------------------------------------------
+
+            /**
+             * @private
+             * @type {List.<(string | number)>}
+             */
+            this.argumentList       = new List(arguments);
+
+            /**
+             * @private
+             * @type {string}
+             */
+            this.annotationType     = annotationType;
+        },
+
+
+        //-------------------------------------------------------------------------------
+        // Getters and Setters
+        //-------------------------------------------------------------------------------
 
         /**
-         * @private
-         * @type {string}
+         * @return {List.<(string | number)>}
          */
-        this.annotationType     = annotationType;
-    },
+        getArgumentList: function() {
+            return this.argumentList;
+        },
+
+        /**
+         * @return {string}
+         */
+        getAnnotationType: function() {
+            return this.annotationType;
+        },
+
+
+        //-------------------------------------------------------------------------------
+        // IObjectable Implementation
+        //-------------------------------------------------------------------------------
+
+        /**
+         * @return {Object}
+         */
+        toObject: function() {
+            return {
+                arguments: this.argumentList.toArray(),
+                type: this.annotationType
+            };
+        }
+    });
 
 
     //-------------------------------------------------------------------------------
-    // Getters and Setters
+    // Interfaces
     //-------------------------------------------------------------------------------
 
-    /**
-     * @return {List.<(string | number)>}
-     */
-    getArgumentList: function() {
-        return this.argumentList;
-    },
-
-    /**
-     * @return {string}
-     */
-    getAnnotationType: function() {
-        return this.annotationType;
-    },
+    Class.implement(BugAnnotation, IObjectable);
 
 
     //-------------------------------------------------------------------------------
-    // IObjectable Implementation
+    // Exports
     //-------------------------------------------------------------------------------
 
-    /**
-     * @return {Object}
-     */
-    toObject: function() {
-        return {
-            arguments: this.argumentList.toArray(),
-            type: this.annotationType
-        };
-    }
+    bugpack.export('buganno.BugAnnotation', BugAnnotation);
 });
-
-
-//-------------------------------------------------------------------------------
-// Interfaces
-//-------------------------------------------------------------------------------
-
-Class.implement(BugAnnotation, IObjectable);
-
-
-//-------------------------------------------------------------------------------
-// Exports
-//-------------------------------------------------------------------------------
-
-bugpack.export('buganno.BugAnnotation', BugAnnotation);

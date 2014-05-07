@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2014 airbug inc. http://airbug.com
+ *
+ * buganno may be freely distributed under the MIT license.
+ */
+
+
 //-------------------------------------------------------------------------------
 // Requires
 //-------------------------------------------------------------------------------
@@ -33,9 +40,9 @@ var nodejs              = enableModule('nodejs');
 // Values
 //-------------------------------------------------------------------------------
 
-var version             = "0.1.2";
+var version             = "0.1.3";
 var dependencies        = {
-    bugpack: "0.1.6"
+    bugpack: "0.1.12"
 };
 
 

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2014 airbug inc. http://airbug.com
+ *
+ * buganno may be freely distributed under the MIT license.
+ */
+
+
 //-------------------------------------------------------------------------------
 // Annotations
 //-------------------------------------------------------------------------------
@@ -14,150 +21,153 @@
 
 
 //-------------------------------------------------------------------------------
-// Common Modules
+// Context
 //-------------------------------------------------------------------------------
 
-var bugpack         = require('bugpack').context();
-
-
-//-------------------------------------------------------------------------------
-// BugPack
-//-------------------------------------------------------------------------------
-
-var Bug             = bugpack.require('Bug');
-var Class           = bugpack.require('Class');
-var IObjectable     = bugpack.require('IObjectable');
-var List            = bugpack.require('List');
-var Map             = bugpack.require('Map');
-var Obj             = bugpack.require('Obj');
-var BugAnnotation   = bugpack.require('buganno.BugAnnotation');
-
-
-//-------------------------------------------------------------------------------
-// Declare Class
-//-------------------------------------------------------------------------------
-
-/**
- * @class
- * @extends {Obj}
- */
-var AnnotationRegistry = Class.extend(Obj, {
+require('bugpack').context("*", function(bugpack) {
 
     //-------------------------------------------------------------------------------
-    // Constructor
+    // BugPack
+    //-------------------------------------------------------------------------------
+
+    var Bug             = bugpack.require('Bug');
+    var Class           = bugpack.require('Class');
+    var IObjectable     = bugpack.require('IObjectable');
+    var List            = bugpack.require('List');
+    var Map             = bugpack.require('Map');
+    var Obj             = bugpack.require('Obj');
+    var BugAnnotation   = bugpack.require('buganno.BugAnnotation');
+
+
+    //-------------------------------------------------------------------------------
+    // Declare Class
     //-------------------------------------------------------------------------------
 
     /**
-     * @constructs
-     * @param {Path} filePath
+     * @class
+     * @extends {Obj}
      */
-    _constructor: function(filePath) {
+    var AnnotationRegistry = Class.extend(Obj, {
 
-        this._super();
+        _name: "buganno.AnnotationRegistry",
 
 
         //-------------------------------------------------------------------------------
-        // Private Properties
+        // Constructor
         //-------------------------------------------------------------------------------
 
         /**
-         * @private
-         * @type {List.<BugAnnotation>}
+         * @constructs
+         * @param {Path} filePath
          */
-        this.annotationList     = new List();
+        _constructor: function(filePath) {
+
+            this._super();
+
+
+            //-------------------------------------------------------------------------------
+            // Private Properties
+            //-------------------------------------------------------------------------------
+
+            /**
+             * @private
+             * @type {List.<BugAnnotation>}
+             */
+            this.annotationList     = new List();
+
+            /**
+             * @private
+             * @type {Map.<string, List.<BugAnnotation>>}
+             */
+            this.annotationTypeMap  = new Map();
+
+            /**
+             * @private
+             * @type {Path}
+             */
+            this.filePath           = filePath;
+        },
+
+
+        //-------------------------------------------------------------------------------
+        // Getters and Setters
+        //-------------------------------------------------------------------------------
 
         /**
-         * @private
-         * @type {Map.<string, List.<BugAnnotation>>}
+         * @return {List.<BugAnnotation>}
          */
-        this.annotationTypeMap  = new Map();
+        getAnnotationList: function() {
+            return this.annotationList;
+        },
 
         /**
-         * @private
-         * @type {Path}
+         * @return {Path}
          */
-        this.filePath           = filePath;
-    },
+        getFilePath: function() {
+            return this.filePath;
+        },
 
 
-    //-------------------------------------------------------------------------------
-    // Getters and Setters
-    //-------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------
+        // IObjectable Implementation
+        //-------------------------------------------------------------------------------
 
-    /**
-     * @return {List.<BugAnnotation>}
-     */
-    getAnnotationList: function() {
-        return this.annotationList;
-    },
-
-    /**
-     * @return {Path}
-     */
-    getFilePath: function() {
-        return this.filePath;
-    },
-
-
-    //-------------------------------------------------------------------------------
-    // IObjectable Implementation
-    //-------------------------------------------------------------------------------
-
-    /**
-     * @return {Object}
-     */
-    toObject: function() {
-        var annotationRegistryData = {
-            filePath: this.filePath.getAbsolutePath(),
-            annotationList: []
-        };
-        this.annotationList.forEach(function(annotation) {
-            annotationRegistryData.annotationList.push(annotation.toObject());
-        });
-        return annotationRegistryData;
-    },
+        /**
+         * @return {Object}
+         */
+        toObject: function() {
+            var annotationRegistryData = {
+                filePath: this.filePath.getAbsolutePath(),
+                annotationList: []
+            };
+            this.annotationList.forEach(function(annotation) {
+                annotationRegistryData.annotationList.push(annotation.toObject());
+            });
+            return annotationRegistryData;
+        },
 
 
-    //-------------------------------------------------------------------------------
-    // Public Methods
-    //-------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------
+        // Public Methods
+        //-------------------------------------------------------------------------------
 
-    /**
-     * @param {BugAnnotation} annotation
-     */
-    addAnnotation: function(annotation) {
-        if (Class.doesExtend(annotation, BugAnnotation)) {
-            this.annotationList.add(annotation);
-            var annotationTypeList = this.annotationTypeMap.get(annotation.getAnnotationType());
-            if (!annotationTypeList) {
-                annotationTypeList = new List();
-                this.annotationTypeMap.put(annotation.getAnnotationType(), annotationTypeList);
+        /**
+         * @param {BugAnnotation} annotation
+         */
+        addAnnotation: function(annotation) {
+            if (Class.doesExtend(annotation, BugAnnotation)) {
+                this.annotationList.add(annotation);
+                var annotationTypeList = this.annotationTypeMap.get(annotation.getAnnotationType());
+                if (!annotationTypeList) {
+                    annotationTypeList = new List();
+                    this.annotationTypeMap.put(annotation.getAnnotationType(), annotationTypeList);
+                }
+                annotationTypeList.add(annotation);
+            } else {
+                throw new Bug("IllegalArgument", {}, "parameter 'annotation' must be an instance of BugAnnotation");
             }
-            annotationTypeList.add(annotation);
-        } else {
-            throw new Bug("IllegalArgument", {}, "parameter 'annotation' must be an instance of BugAnnotation");
+        },
+
+        /**
+         * @param {string} type
+         * @return {List.<BugAnnotation>}
+         */
+        getAnnotationListByType: function(type) {
+            return this.annotationTypeMap.get(type);
         }
-    },
+    });
 
-    /**
-     * @param {string} type
-     * @return {List.<BugAnnotation>}
-     */
-    getAnnotationListByType: function(type) {
-        return this.annotationTypeMap.get(type);
-    }
+
+    //-------------------------------------------------------------------------------
+    // Interfaces
+    //-------------------------------------------------------------------------------
+
+    Class.implement(AnnotationRegistry, IObjectable);
+
+
+    //-------------------------------------------------------------------------------
+    // Exports
+    //-------------------------------------------------------------------------------
+
+    bugpack.export('buganno.AnnotationRegistry', AnnotationRegistry);
 });
-
-
-//-------------------------------------------------------------------------------
-// Interfaces
-//-------------------------------------------------------------------------------
-
-Class.implement(AnnotationRegistry, IObjectable);
-
-
-//-------------------------------------------------------------------------------
-// Exports
-//-------------------------------------------------------------------------------
-
-bugpack.export('buganno.AnnotationRegistry', AnnotationRegistry);
