@@ -14,7 +14,7 @@
 //@Require('Class')
 //@Require('buganno.AnnotationRegistry')
 //@Require('bugmeta.BugMeta')
-//@Require('bugunit.TestAnnotation')
+//@Require('bugunit.TestTag')
 //@Require('bugyarn.BugYarn')
 
 
@@ -31,7 +31,7 @@ require('bugpack').context("*", function(bugpack) {
     var Class                   = bugpack.require('Class');
     var AnnotationRegistry      = bugpack.require('buganno.AnnotationRegistry');
     var BugMeta                 = bugpack.require('bugmeta.BugMeta');
-    var TestAnnotation          = bugpack.require('bugunit.TestAnnotation');
+    var TestTag          = bugpack.require('bugunit.TestTag');
     var BugYarn                 = bugpack.require('bugyarn.BugYarn');
 
 
@@ -41,7 +41,7 @@ require('bugpack').context("*", function(bugpack) {
 
     var bugmeta                 = BugMeta.context();
     var bugyarn                 = BugYarn.context();
-    var test                    = TestAnnotation.test;
+    var test                    = TestTag.test;
 
 
     //-------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ require('bugpack').context("*", function(bugpack) {
         return new AnnotationRegistry(args[0]);
     });
 
-    bugyarn.registerWinder("setupTestAnnotationRegistry", function(yarn) {
+    bugyarn.registerWinder("setupTestTagRegistry", function(yarn) {
         yarn.wind({
             annotationRegistry: new AnnotationRegistry("testFilePath")
         });
@@ -94,7 +94,7 @@ require('bugpack').context("*", function(bugpack) {
     // BugMeta
     //-------------------------------------------------------------------------------
 
-    bugmeta.annotate(annotationRegistryInstantiationTest).with(
+    bugmeta.tag(annotationRegistryInstantiationTest).with(
         test().name("AnnotationRegistry - instantiation test")
     );
 });

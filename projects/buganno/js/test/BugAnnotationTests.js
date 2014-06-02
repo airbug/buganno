@@ -15,7 +15,7 @@
 //@Require('List')
 //@Require('buganno.BugAnnotation')
 //@Require('bugmeta.BugMeta')
-//@Require('bugunit.TestAnnotation')
+//@Require('bugunit.TestTag')
 //@Require('bugyarn.BugYarn')
 
 
@@ -33,7 +33,7 @@ require('bugpack').context("*", function(bugpack) {
     var List                    = bugpack.require('List');
     var BugAnnotation           = bugpack.require('buganno.BugAnnotation');
     var BugMeta                 = bugpack.require('bugmeta.BugMeta');
-    var TestAnnotation          = bugpack.require('bugunit.TestAnnotation');
+    var TestTag          = bugpack.require('bugunit.TestTag');
     var BugYarn                 = bugpack.require('bugyarn.BugYarn');
 
 
@@ -43,7 +43,7 @@ require('bugpack').context("*", function(bugpack) {
 
     var bugmeta                 = BugMeta.context();
     var bugyarn                 = BugYarn.context();
-    var test                    = TestAnnotation.test;
+    var test                    = TestTag.test;
 
 
     //-------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ require('bugpack').context("*", function(bugpack) {
     // BugMeta
     //-------------------------------------------------------------------------------
 
-    bugmeta.annotate(bugAnnotationInstantiationTest).with(
+    bugmeta.tag(bugAnnotationInstantiationTest).with(
         test().name("BugAnnotation - instantiation test")
     );
 });
