@@ -29,7 +29,7 @@ require('bugpack').context("*", function(bugpack) {
 
     var Class               = bugpack.require('Class');
     var Obj                 = bugpack.require('Obj');
-    var Annotation       = bugpack.require('buganno.Annotation');
+    var Annotation          = bugpack.require('buganno.Annotation');
     var AnnotationRegistry  = bugpack.require('buganno.AnnotationRegistry');
 
 

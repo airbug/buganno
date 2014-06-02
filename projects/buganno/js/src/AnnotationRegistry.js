@@ -36,7 +36,7 @@ require('bugpack').context("*", function(bugpack) {
     var List            = bugpack.require('List');
     var Map             = bugpack.require('Map');
     var Obj             = bugpack.require('Obj');
-    var Annotation   = bugpack.require('buganno.Annotation');
+    var Annotation      = bugpack.require('buganno.Annotation');
 
 
     //-------------------------------------------------------------------------------

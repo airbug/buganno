@@ -17,9 +17,9 @@
 //@Require('Exception')
 //@Require('List')
 //@Require('Map')
-//@Require('bugflow.BugFlow')
 //@Require('buganno.AnnotationParserProcessor')
 //@Require('buganno.AnnotationRegistryLibrary')
+//@Require('bugflow.BugFlow')
 
 
 //-------------------------------------------------------------------------------
@@ -38,9 +38,9 @@ require('bugpack').context("*", function(bugpack) {
     var Exception                   = bugpack.require('Exception');
     var List                        = bugpack.require('List');
     var Map                         = bugpack.require('Map');
-    var BugFlow                     = bugpack.require('bugflow.BugFlow');
     var AnnotationParserProcessor   = bugpack.require('buganno.AnnotationParserProcessor');
     var AnnotationRegistryLibrary   = bugpack.require('buganno.AnnotationRegistryLibrary');
+    var BugFlow                     = bugpack.require('bugflow.BugFlow');
 
 
     //-------------------------------------------------------------------------------

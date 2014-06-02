@@ -30,7 +30,7 @@ require('bugpack').context("*", function(bugpack) {
     var Class               = bugpack.require('Class');
     var AnnotationParser    = bugpack.require('buganno.AnnotationParser');
     var BugMeta             = bugpack.require('bugmeta.BugMeta');
-    var TestTag      = bugpack.require('bugunit.TestTag');
+    var TestTag             = bugpack.require('bugunit.TestTag');
 
 
     //-------------------------------------------------------------------------------

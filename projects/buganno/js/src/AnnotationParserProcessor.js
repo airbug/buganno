@@ -18,8 +18,8 @@
 //@Require('Map')
 //@Require('Obj')
 //@Require('UuidGenerator')
-//@Require('buganno.AnnotationRegistry')
 //@Require('buganno.Annotation')
+//@Require('buganno.AnnotationRegistry')
 //@Require('bugflow.BugFlow')
 //@Require('bugfs.BugFs')
 
@@ -49,8 +49,8 @@ require('bugpack').context("*", function(bugpack) {
     var Map                 = bugpack.require('Map');
     var Obj                 = bugpack.require('Obj');
     var UuidGenerator       = bugpack.require('UuidGenerator');
+    var Annotation          = bugpack.require('buganno.Annotation');
     var AnnotationRegistry  = bugpack.require('buganno.AnnotationRegistry');
-    var Annotation       = bugpack.require('buganno.Annotation');
     var BugFlow             = bugpack.require('bugflow.BugFlow');
     var BugFs               = bugpack.require('bugfs.BugFs');
 
