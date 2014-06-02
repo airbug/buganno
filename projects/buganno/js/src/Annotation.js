@@ -9,7 +9,7 @@
 // Annotations
 //-------------------------------------------------------------------------------
 
-//@Export('buganno.BugAnnotation')
+//@Export('buganno.Annotation')
 
 //@Require('Class')
 //@Require('IObjectable')
@@ -41,9 +41,9 @@ require('bugpack').context("*", function(bugpack) {
      * @class
      * @extends {Obj}
      */
-    var BugAnnotation = Class.extend(Obj, {
+    var Annotation = Class.extend(Obj, {
 
-        _name: "buganno.BugAnnotation",
+        _name: "buganno.Annotation",
 
 
         //-------------------------------------------------------------------------------
@@ -117,12 +117,12 @@ require('bugpack').context("*", function(bugpack) {
     // Interfaces
     //-------------------------------------------------------------------------------
 
-    Class.implement(BugAnnotation, IObjectable);
+    Class.implement(Annotation, IObjectable);
 
 
     //-------------------------------------------------------------------------------
     // Exports
     //-------------------------------------------------------------------------------
 
-    bugpack.export('buganno.BugAnnotation', BugAnnotation);
+    bugpack.export('buganno.Annotation', Annotation);
 });

@@ -13,7 +13,7 @@
 
 //@Require('Class')
 //@Require('Obj')
-//@Require('buganno.BugAnnotation')
+//@Require('buganno.Annotation')
 //@Require('buganno.AnnotationRegistry')
 
 
@@ -29,7 +29,7 @@ require('bugpack').context("*", function(bugpack) {
 
     var Class               = bugpack.require('Class');
     var Obj                 = bugpack.require('Obj');
-    var BugAnnotation       = bugpack.require('buganno.BugAnnotation');
+    var Annotation       = bugpack.require('buganno.Annotation');
     var AnnotationRegistry  = bugpack.require('buganno.AnnotationRegistry');
 
 
@@ -104,7 +104,7 @@ require('bugpack').context("*", function(bugpack) {
                                 var type = results[1];
                                 var argumentsString = results[2];
                                 var arguments = _this.parseArguments(argumentsString);
-                                var annotation = new BugAnnotation(type, arguments);
+                                var annotation = new Annotation(type, arguments);
                                 annotationRegistry.addAnnotation(annotation);
                             }
                         });

@@ -19,7 +19,7 @@
 //@Require('Obj')
 //@Require('UuidGenerator')
 //@Require('buganno.AnnotationRegistry')
-//@Require('buganno.BugAnnotation')
+//@Require('buganno.Annotation')
 //@Require('bugflow.BugFlow')
 //@Require('bugfs.BugFs')
 
@@ -50,7 +50,7 @@ require('bugpack').context("*", function(bugpack) {
     var Obj                 = bugpack.require('Obj');
     var UuidGenerator       = bugpack.require('UuidGenerator');
     var AnnotationRegistry  = bugpack.require('buganno.AnnotationRegistry');
-    var BugAnnotation       = bugpack.require('buganno.BugAnnotation');
+    var Annotation       = bugpack.require('buganno.Annotation');
     var BugFlow             = bugpack.require('bugflow.BugFlow');
     var BugFs               = bugpack.require('bugfs.BugFs');
 
@@ -289,7 +289,7 @@ require('bugpack').context("*", function(bugpack) {
 
             var annotationRegistry = new AnnotationRegistry(BugFs.path(annotationRegistryData.filePath));
             annotationRegistryData.annotationList.forEach(function(annotationData) {
-                var annotation = new BugAnnotation(annotationData.type, annotationData.arguments);
+                var annotation = new Annotation(annotationData.type, annotationData.arguments);
                 annotationRegistry.addAnnotation(annotation);
             });
             var callback        = this.taskUuidCallbackMap.remove(message.taskUuid);

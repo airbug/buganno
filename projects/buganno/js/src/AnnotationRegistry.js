@@ -17,7 +17,7 @@
 //@Require('List')
 //@Require('Map')
 //@Require('Obj')
-//@Require('buganno.BugAnnotation')
+//@Require('buganno.Annotation')
 
 
 //-------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ require('bugpack').context("*", function(bugpack) {
     var List            = bugpack.require('List');
     var Map             = bugpack.require('Map');
     var Obj             = bugpack.require('Obj');
-    var BugAnnotation   = bugpack.require('buganno.BugAnnotation');
+    var Annotation   = bugpack.require('buganno.Annotation');
 
 
     //-------------------------------------------------------------------------------
@@ -71,13 +71,13 @@ require('bugpack').context("*", function(bugpack) {
 
             /**
              * @private
-             * @type {List.<BugAnnotation>}
+             * @type {List.<Annotation>}
              */
             this.annotationList     = new List();
 
             /**
              * @private
-             * @type {Map.<string, List.<BugAnnotation>>}
+             * @type {Map.<string, List.<Annotation>>}
              */
             this.annotationTypeMap  = new Map();
 
@@ -94,7 +94,7 @@ require('bugpack').context("*", function(bugpack) {
         //-------------------------------------------------------------------------------
 
         /**
-         * @return {List.<BugAnnotation>}
+         * @return {List.<Annotation>}
          */
         getAnnotationList: function() {
             return this.annotationList;
@@ -132,10 +132,10 @@ require('bugpack').context("*", function(bugpack) {
         //-------------------------------------------------------------------------------
 
         /**
-         * @param {BugAnnotation} annotation
+         * @param {Annotation} annotation
          */
         addAnnotation: function(annotation) {
-            if (Class.doesExtend(annotation, BugAnnotation)) {
+            if (Class.doesExtend(annotation, Annotation)) {
                 this.annotationList.add(annotation);
                 var annotationTypeList = this.annotationTypeMap.get(annotation.getAnnotationType());
                 if (!annotationTypeList) {
@@ -144,13 +144,13 @@ require('bugpack').context("*", function(bugpack) {
                 }
                 annotationTypeList.add(annotation);
             } else {
-                throw new Bug("IllegalArgument", {}, "parameter 'annotation' must be an instance of BugAnnotation");
+                throw new Bug("IllegalArgument", {}, "parameter 'annotation' must be an instance of Annotation");
             }
         },
 
         /**
          * @param {string} type
-         * @return {List.<BugAnnotation>}
+         * @return {List.<Annotation>}
          */
         getAnnotationListByType: function(type) {
             return this.annotationTypeMap.get(type);
