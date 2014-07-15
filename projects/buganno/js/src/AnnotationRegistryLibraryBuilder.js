@@ -15,11 +15,11 @@
 //@Require('Event')
 //@Require('EventDispatcher')
 //@Require('Exception')
+//@Require('Flows')
 //@Require('List')
 //@Require('Map')
 //@Require('buganno.AnnotationParserProcessor')
 //@Require('buganno.AnnotationRegistryLibrary')
-//@Require('Flows')
 
 
 //-------------------------------------------------------------------------------
@@ -36,11 +36,11 @@ require('bugpack').context("*", function(bugpack) {
     var Event                       = bugpack.require('Event');
     var EventDispatcher             = bugpack.require('EventDispatcher');
     var Exception                   = bugpack.require('Exception');
+    var Flows                       = bugpack.require('Flows');
     var List                        = bugpack.require('List');
     var Map                         = bugpack.require('Map');
     var AnnotationParserProcessor   = bugpack.require('buganno.AnnotationParserProcessor');
     var AnnotationRegistryLibrary   = bugpack.require('buganno.AnnotationRegistryLibrary');
-    var Flows                     = bugpack.require('Flows');
 
 
     //-------------------------------------------------------------------------------

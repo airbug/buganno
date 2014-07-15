@@ -12,10 +12,10 @@
 //@Export('buganno.BugAnno')
 
 //@Require('Class')
+//@Require('Flows')
 //@Require('Obj')
 //@Require('Proxy')
 //@Require('buganno.AnnotationRegistryLibraryBuilder')
-//@Require('Flows')
 
 
 //-------------------------------------------------------------------------------
@@ -29,10 +29,10 @@ require('bugpack').context("*", function(bugpack) {
     //-------------------------------------------------------------------------------
 
     var Class                               = bugpack.require('Class');
+    var Flows                               = bugpack.require('Flows');
     var Obj                                 = bugpack.require('Obj');
     var Proxy                               = bugpack.require('Proxy');
     var AnnotationRegistryLibraryBuilder    = bugpack.require('buganno.AnnotationRegistryLibraryBuilder');
-    var Flows                             = bugpack.require('Flows');
 
 
     //-------------------------------------------------------------------------------

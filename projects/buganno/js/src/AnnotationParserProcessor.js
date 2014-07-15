@@ -14,13 +14,13 @@
 //@Require('Bug')
 //@Require('Class')
 //@Require('Exception')
+//@Require('Flows')
 //@Require('List')
 //@Require('Map')
 //@Require('Obj')
 //@Require('UuidGenerator')
 //@Require('buganno.Annotation')
 //@Require('buganno.AnnotationRegistry')
-//@Require('Flows')
 //@Require('bugfs.BugFs')
 
 
@@ -45,13 +45,13 @@ require('bugpack').context("*", function(bugpack) {
     var Bug                 = bugpack.require('Bug');
     var Class               = bugpack.require('Class');
     var Exception           = bugpack.require('Exception');
+    var Flows               = bugpack.require('Flows');
     var List                = bugpack.require('List');
     var Map                 = bugpack.require('Map');
     var Obj                 = bugpack.require('Obj');
     var UuidGenerator       = bugpack.require('UuidGenerator');
     var Annotation          = bugpack.require('buganno.Annotation');
     var AnnotationRegistry  = bugpack.require('buganno.AnnotationRegistry');
-    var Flows             = bugpack.require('Flows');
     var BugFs               = bugpack.require('bugfs.BugFs');
 
 
