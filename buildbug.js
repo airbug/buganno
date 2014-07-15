@@ -77,9 +77,7 @@ buildProperties({
         },
         sourcePaths: [
             "../bugcore/projects/bugcore/js/src",
-            "../bugflow/projects/bugflow/js/src",
             "../bugfs/projects/bugfs/js/src",
-            "../bugtrace/projects/bugtrace/js/src",
             "./projects/buganno/js/src"
         ],
         scriptPaths: [
@@ -110,9 +108,7 @@ buildProperties({
             ],
             testPaths: [
                 "../bugcore/projects/bugcore/js/test",
-                "../bugflow/projects/bugflow/js/test",
                 "../bugfs/projects/bugfs/js/test",
-                "../bugtrace/projects/bugtrace/js/test",
                 "./projects/buganno/js/test"
             ]
         }

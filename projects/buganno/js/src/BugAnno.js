@@ -15,7 +15,7 @@
 //@Require('Obj')
 //@Require('Proxy')
 //@Require('buganno.AnnotationRegistryLibraryBuilder')
-//@Require('bugflow.BugFlow')
+//@Require('Flows')
 
 
 //-------------------------------------------------------------------------------
@@ -32,15 +32,15 @@ require('bugpack').context("*", function(bugpack) {
     var Obj                                 = bugpack.require('Obj');
     var Proxy                               = bugpack.require('Proxy');
     var AnnotationRegistryLibraryBuilder    = bugpack.require('buganno.AnnotationRegistryLibraryBuilder');
-    var BugFlow                             = bugpack.require('bugflow.BugFlow');
+    var Flows                             = bugpack.require('Flows');
 
 
     //-------------------------------------------------------------------------------
     // Simplify References
     //-------------------------------------------------------------------------------
 
-    var $series                             = BugFlow.$series;
-    var $task                               = BugFlow.$task;
+    var $series                             = Flows.$series;
+    var $task                               = Flows.$task;
 
 
     //-------------------------------------------------------------------------------

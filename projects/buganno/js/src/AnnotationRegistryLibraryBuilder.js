@@ -19,7 +19,7 @@
 //@Require('Map')
 //@Require('buganno.AnnotationParserProcessor')
 //@Require('buganno.AnnotationRegistryLibrary')
-//@Require('bugflow.BugFlow')
+//@Require('Flows')
 
 
 //-------------------------------------------------------------------------------
@@ -40,16 +40,15 @@ require('bugpack').context("*", function(bugpack) {
     var Map                         = bugpack.require('Map');
     var AnnotationParserProcessor   = bugpack.require('buganno.AnnotationParserProcessor');
     var AnnotationRegistryLibrary   = bugpack.require('buganno.AnnotationRegistryLibrary');
-    var BugFlow                     = bugpack.require('bugflow.BugFlow');
+    var Flows                     = bugpack.require('Flows');
 
 
     //-------------------------------------------------------------------------------
     // Simplify References
     //-------------------------------------------------------------------------------
 
-    var $iterableParallel           = BugFlow.$iterableParallel;
-    var $series                     = BugFlow.$series;
-    var $task                       = BugFlow.$task;
+    var $iterableParallel           = Flows.$iterableParallel;
+    var $task                       = Flows.$task;
 
 
     //-------------------------------------------------------------------------------

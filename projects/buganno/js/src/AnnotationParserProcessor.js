@@ -20,7 +20,7 @@
 //@Require('UuidGenerator')
 //@Require('buganno.Annotation')
 //@Require('buganno.AnnotationRegistry')
-//@Require('bugflow.BugFlow')
+//@Require('Flows')
 //@Require('bugfs.BugFs')
 
 
@@ -51,7 +51,7 @@ require('bugpack').context("*", function(bugpack) {
     var UuidGenerator       = bugpack.require('UuidGenerator');
     var Annotation          = bugpack.require('buganno.Annotation');
     var AnnotationRegistry  = bugpack.require('buganno.AnnotationRegistry');
-    var BugFlow             = bugpack.require('bugflow.BugFlow');
+    var Flows             = bugpack.require('Flows');
     var BugFs               = bugpack.require('bugfs.BugFs');
 
 
@@ -59,9 +59,9 @@ require('bugpack').context("*", function(bugpack) {
     // Simplify References
     //-------------------------------------------------------------------------------
 
-    var $series             = BugFlow.$series;
-    var $task               = BugFlow.$task;
-    var $whileParallel      = BugFlow.$whileParallel;
+    var $series             = Flows.$series;
+    var $task               = Flows.$task;
+    var $whileParallel      = Flows.$whileParallel;
 
 
     //-------------------------------------------------------------------------------
