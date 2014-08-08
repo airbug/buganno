@@ -43,7 +43,7 @@ var nodejs              = enableModule('nodejs');
 //-------------------------------------------------------------------------------
 
 var name                = "buganno";
-var version             = "0.1.5";
+var version             = "0.1.6";
 var dependencies        = {
     bugpack: "0.1.14"
 };
