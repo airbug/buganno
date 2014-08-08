@@ -43,7 +43,7 @@ var nodejs              = enableModule('nodejs');
 //-------------------------------------------------------------------------------
 
 var name                = "buganno";
-var version             = "0.1.6";
+var version             = "0.1.7";
 var dependencies        = {
     bugpack: "0.1.14"
 };
@@ -103,20 +103,18 @@ buildProperties({
                 }
             },
             sourcePaths: [
-                "../buganno/libraries/buganno/js/src",
                 "../bugdouble/libraries/bugdouble/js/src",
                 "../bugmeta/libraries/bugmeta/js/src",
                 "../bugunit/libraries/bugunit/js/src",
                 "../bugyarn/libraries/bugyarn/js/src"
             ],
             scriptPaths: [
-                "../buganno/libraries/buganno/js/scripts",
                 "../bugunit/libraries/bugunit/js/scripts"
             ],
             testPaths: [
                 "../bugcore/libraries/bugcore/js/test",
                 "../bugfs/libraries/bugfs/js/test",
-                "./projects/buganno/js/test"
+                "./libraries/buganno/js/test"
             ]
         }
     },
