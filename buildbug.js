@@ -61,7 +61,7 @@ buildProperties({
 buildProperties({
     node: {
         packageJson: {
-            name: "{name}}",
+            name: "{{name}}",
             version: "{{version}}",
             description: "Library for loading and parsing annotations from JavaScript files.",
             main: "./scripts/buganno-node.js",
