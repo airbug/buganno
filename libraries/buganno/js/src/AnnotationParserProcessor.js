@@ -233,7 +233,7 @@ require('bugpack').context("*", function(bugpack) {
         /**
          * @private
          * @param {Path} sourceFile
-         * @returns {{sourceFile: string, taskUuid: string}}
+         * @return {{sourceFile: string, taskUuid: string}}
          */
         generateParseTask: function(sourceFile) {
             var taskUuid = UuidGenerator.generateUuid();
